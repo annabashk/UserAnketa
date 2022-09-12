@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 
 namespace UserAnketa
 {
@@ -7,12 +9,14 @@ namespace UserAnketa
         static void Main(string[] args)
         {
 
-            InputData();
 
+            InputData();
+            OutputData();
+            
             // Метод для ввода данных
-            static (string Name, string LastName, int Age, bool HasPet) InputData()
+            static (string Name, string LastName, int Age, string[] NamePet, string[] FavColors) InputData()
             {
-                (string Name, string LastName, int Age, bool HasPet) User;
+                (string Name, string LastName, int Age, string[] NamePet, string[] FavColors) User;
 
                 Console.WriteLine("Введите имя");
                 User.Name = Console.ReadLine();
@@ -27,7 +31,7 @@ namespace UserAnketa
                 {
                     Console.WriteLine("Введите возраст");
                     age = Console.ReadLine();
-                } while (CheckNum(age,out integer));
+                } while (CheckNum(age, out integer));
 
                 User.Age = integer;
 
@@ -37,8 +41,6 @@ namespace UserAnketa
 
                 if (pet == "Да")
                 {
-                    User.HasPet = true;
-
                     string sum;
                     do
                     {
@@ -49,15 +51,15 @@ namespace UserAnketa
                     int SumPet = integer;
 
                     // Создание массива с именами животных
-                    var NamePet = new string[SumPet];
+                    User.NamePet = new string[SumPet];
                     for (int i = 0; i < SumPet; i++)
                     {
                         Console.WriteLine($"Введите кличку питомца {i + 1}");
-                        NamePet[i] = Console.ReadLine();
+                        User.NamePet[i] = Console.ReadLine();
                     }
                 }
-                else User.HasPet = false;
-                
+                else User.NamePet = null; 
+
                 // Ввод кол-ва любимых цветов и проверка ввода на корректность
                 string col;
                 do
@@ -69,13 +71,13 @@ namespace UserAnketa
                 int SumColor = integer;
 
                 // Создание массива с любимыми цветами
-                var FavColors = new string[SumColor];
+                User.FavColors = new string[SumColor];
                 for (int i = 0; i < SumColor; i++)
                 {
                     Console.WriteLine($"Введите любимый цвет {i + 1}");
-                    FavColors[i] = Console.ReadLine();
+                    User.FavColors[i] = Console.ReadLine();
                 }
-
+                
                 return User;
             }
 
@@ -99,7 +101,8 @@ namespace UserAnketa
             // Метод вывода всех данных
             static void OutputData()
             {
-               // Console.WriteLine($"Ваше имя: {User.Name}");
+               Console.WriteLine($"Ваше имя: {}");
+               Console.WriteLine($"Ваша фамилия: {}");
             }
         }
     }
